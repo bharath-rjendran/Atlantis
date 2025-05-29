@@ -1,3 +1,12 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "registry.terraform.io/hashicorp/azurerm"
+      version = "4.20.0"
+    }
+  }
+}
+
 provider "azurerm" {
   subscription_id = var.subscription_id
   client_id       = var.client_id
