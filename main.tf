@@ -24,6 +24,7 @@ resource "azurerm_virtual_network" "vnet" {
   tags = {
     environment = var.environment
   }
+  depends_on = [azurerm_resource_group.rg]
 }
 
 resource "azurerm_subnet" "subnet" {
@@ -32,7 +33,7 @@ resource "azurerm_subnet" "subnet" {
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = [var.subnet_cidr_blocks[count.index]]
-  #depends_on = [azurerm_virtual_network.vnet]
+  depends_on = [azurerm_virtual_network.vnet]
 }
 
 resource "azurerm_network_interface" "nic" {
@@ -45,6 +46,7 @@ resource "azurerm_network_interface" "nic" {
     subnet_id                     = azurerm_subnet.subnet[0].id
     private_ip_address_allocation = "Dynamic"
   }
+  depends_on = [azurerm_subnet.subnet]
 }
 
 resource "azurerm_linux_virtual_machine" "vm" {
@@ -56,7 +58,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   admin_password        = var.admin_password
   disable_password_authentication = false
   network_interface_ids = [azurerm_network_interface.nic.id]
-  #depends_on            = [azurerm_network_interface.nic]
+  depends_on            = [azurerm_network_interface.nic]
 
   source_image_reference {
     publisher = "Canonical"
