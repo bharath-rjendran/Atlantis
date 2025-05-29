@@ -4,5 +4,5 @@ projects:
   - dir: .
     workspace: default
     autoplan:
-      when_modified: ["*.tf", "modules/**/*.tf", "environments/dev.tfvars"]
+      when_modified: ["*.tf", "*.tfvars"]
       enabled: true
