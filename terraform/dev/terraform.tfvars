@@ -1,6 +1,6 @@
-resource_group_name = "rg_gitops"
+resource_group_name = "rg_test"
 location            = "australiacentral"
-vm_name             = "vm-gitops"
+vm_name             = "vm-test"
 environment         = "gitops"
 address_space       = ["10.0.0.0/16"]
 subnet_names        = ["subnet-gitops"]
