@@ -35,11 +35,11 @@ jobs:
             az account show
             
       - name: Terraform Init
-        run: terraform init -reconfigure -backend-config="terraform/dev/backend-gitops.tfbackend"
+        run: terraform init -reconfigure -backend-config="./terraform/dev/backend-gitops.tfbackend"
 
       - name: Terraform Plan
-        run: terraform plan -var-file="terraform/dev/terraform.tfvars"
+        run: terraform plan -var-file="./terraform/dev/terraform.tfvars"
 
       - name: Terraform Apply
-        run: terraform apply -var-file="terraform/dev/terraform.tfvars" -auto-approve
+        run: terraform apply -var-file="./terraform/dev/terraform.tfvars" -auto-approve
 
