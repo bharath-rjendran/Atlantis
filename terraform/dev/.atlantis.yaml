@@ -1,8 +1,8 @@
 version: 3
 automerge: false
 projects:
-  - name: default
-    dir: .
+  - name: dev
+    dir: terraform/dev
     workspace: default
     autoplan:
       when_modified: 
