@@ -1,0 +1,18 @@
+version: 3
+projects:
+  - dir: .
+    autoplan:
+      when_modified: ["*.tf", *.tfvars"]
+      enabled: true
+    terraform_version: v1.5.7
+    workflow: default
+
+workflows:
+  default:
+    plan:
+      steps:
+        - run: terraform init -backend-config="backend-gitops.tfbackend"
+        - run: terraform plan -var-file="terraform.tfvars"
+    apply:
+      steps:
+        - run: terraform apply -var-file="terraform.tfvars"
