@@ -43,8 +43,3 @@ variable "client_secret" {}
 variable "subscription_id" {}
 variable "tenant_id" {}
 
-variable "subnet_id" {
-    description = "The ID of the subnet in which to create the virtual machine"
-    type        = string
-}
-
