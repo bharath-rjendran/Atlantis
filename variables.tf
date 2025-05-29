@@ -42,4 +42,7 @@ variable "client_id" {}
 variable "client_secret" {}
 variable "subscription_id" {}
 variable "tenant_id" {}
-
+variable "subnet_cidr_blocks" {
+  description = "A map of CIDR blocks for the subnets"
+  type        = list(string)
+}
