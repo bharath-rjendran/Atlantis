@@ -5,10 +5,6 @@ on:
       - main
   workflow_dispatch:
     inputs:
-      environment:
-        description: 'Select environment to apply'
-        required: false
-        default: 'dev'
 env:
   ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
   ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
