@@ -1,18 +1,58 @@
+# version: 3
+# projects:
+#   - dir: .
+#     autoplan:
+#       when_modified: ["*.tf", *.tfvars"]
+#       enabled: true
+#     terraform_version: v1.5.7
+#     workflow: default
+
+# workflows:
+#   default:
+#     plan:
+#       steps:
+#         - run: terraform init -backend-config="backend-gitops.tfbackend"
+#         - run: terraform plan -var-file="terraform.tfvars"
+#     apply:
+#       steps:
+#         - run: terraform apply -var-file="terraform.tfvars"
 version: 3
+automerge: false
 projects:
-  - dir: .
+  - name: dev
+    dir: .
+    workspace: dev
     autoplan:
-      when_modified: ["*.tf", *.tfvars"]
+      when_modified: ["*.tf", "modules/**/*.tf", "environments/dev.tfvars"]
       enabled: true
     terraform_version: v1.5.7
-    workflow: default
+    workflow: custom
+
+  - name: test
+    dir: .
+    workspace: test
+    autoplan:
+      when_modified: ["*.tf", "modules/**/*.tf", "environments/test.tfvars"]
+      enabled: true
+    terraform_version: v1.5.7
+    workflow: custom
+
+  - name: prod
+    dir: .
+    workspace: prod
+    autoplan:
+      when_modified: ["*.tf", "modules/**/*.tf", "environments/prod.tfvars"]
+      enabled: true
+    terraform_version: v1.5.7
+    workflow: custom
 
 workflows:
-  default:
+  custom:
     plan:
       steps:
-        - run: terraform init -backend-config="backend-gitops.tfbackend"
-        - run: terraform plan -var-file="terraform.tfvars"
+        - run: terraform init -backend-config="backend/backend-${ATLANTIS_WORKSPACE}.tfbackend"
+        - run: terraform plan -var-file="environments/${ATLANTIS_WORKSPACE}.tfvars" -out=plan.tfplan
     apply:
       steps:
-        - run: terraform apply -var-file="terraform.tfvars"
+        - run: terraform apply plan.tfplan
+
