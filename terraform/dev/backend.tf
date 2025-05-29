@@ -1,4 +1,8 @@
 terraform {
   backend "azurerm" {
+    resource_group_name = "rgbackend"
+    storage_account_name = "sgterraformbackend"
+    container_name = "tfstate"
+    key = "gitops/terraform.tfstate"
   }
 }
